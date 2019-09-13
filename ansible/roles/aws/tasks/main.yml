@@ -33,7 +33,6 @@
     az: "{{ zone[0] }}"
     cidr: 10.0.2.0/28
     resource_tags:
-      Name: app subnet
       Name: "{{ app_name }}-sub-1a"
   register: subnetb
 
@@ -44,7 +43,6 @@
     az: "{{ zone[1] }}"
     cidr: 10.0.2.16/28
     resource_tags:
-      Name: app subnet
       Name: "{{ app_name }}-sub-1b"
   register: subneta
 
