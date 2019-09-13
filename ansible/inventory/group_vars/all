@@ -1,7 +1,6 @@
 app_name: blockwiz
 instance_type: t2.micro
 region: eu-west-1
-docker_image_name: quay.io/ppavlov/blockwizard
 
 lc_security_groups:
 - "{{ app_security_group.group_id }}"
