@@ -9,6 +9,7 @@ lc_name: "{{ app_name }}-{{ lc_suffix }}"
 batch_size: 1
 
 asg_subnets:
+- "{{ subneta.subnet.id }}"
 - "{{ subnetb.subnet.id }}"
 key_name: "{{ key_name }}"
 asg_desired_capacity: 2
@@ -30,6 +31,7 @@ zone:
  - eu-west-1a
  - eu-west-1b
 availability_zones:
+  - eu-west-1a
   - eu-west-1b
 
 lb_name: "{{ app_name }}"
