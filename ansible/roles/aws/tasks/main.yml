@@ -35,7 +35,7 @@
     resource_tags:
       Name: app subnet
       Name: "{{ app_name }}-sub-1a"
-  register: "app-1a-subnet"
+  register: subnetb
 
 - name: Create subnet for app
   ec2_vpc_subnet:
@@ -46,7 +46,7 @@
     resource_tags:
       Name: app subnet
       Name: "{{ app_name }}-sub-1b"
-  register: "app-1b-subnet"
+  register: subneta
 
 - name: create admin access security group
   ec2_group:

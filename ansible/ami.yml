@@ -14,7 +14,7 @@
       region: "{{ region }}"
       group_id: "{{ ami_group_id }}"
       instance_type: t3.micro
-      vpc_subnet_id: "{{ vpc.subnets[0].id }}"
+      vpc_subnet_id: "{{ subnetb.subnet.id }}"
       image: "{{ ami_base_image }}"
       wait: yes
       wait_timeout: 500

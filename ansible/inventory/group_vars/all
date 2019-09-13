@@ -9,7 +9,7 @@ lc_name: "{{ app_name }}-{{ lc_suffix }}"
 batch_size: 1
 
 asg_subnets:
-- "{{ vpc.subnets[0].id }}"
+- "{{ subnetb.subnet.id }}"
 key_name: "{{ key_name }}"
 asg_desired_capacity: 2
 asg_min_size: 2
