@@ -1,0 +1,49 @@
+---
+
+- name: packages related to APT with https are installed
+  apt:
+    name: '{{ packages }}'
+    state: present
+    update_cache: "{{ 'yes' if not ansible_check_mode | bool else 'no' }}"
+  vars:
+    packages:
+      - apt-transport-https
+      - ca-certificates
+
+- name: docker release key is registered
+  apt_key:
+    url: "https://download.docker.com/linux/{{ ansible_distribution | lower }}/gpg"
+    state: present
+
+- name: software-properties-common is installed for prerequisite for apt_repository ansible module
+  apt:
+    name: software-properties-common
+    state: present
+
+- name: docker apt repository is registered
+  apt_repository:
+    repo: 'deb [arch={{ docker_ce_architecture }}] https://download.docker.com/linux/{{ ansible_distribution | lower }} {{ ansible_lsb.codename }} {{ docker_ce_channel }}'
+    filename: docker
+    state: present
+    mode: 0644
+    update_cache: "{{ 'yes' if not ansible_check_mode | bool else 'no' }}"
+  failed_when: |
+    (ansible_distribution == "ubuntu" and
+     ansible_lsb.codename not in ['xenial', 'bionic', 'cosmic'] or
+     docker_ce_architecture not in ['amd64', 'armhf', 'ppc64le', 's390x']) and
+    (ansible_distribution == "debian" and
+     ansible_lsb.codename not in ['stretch', 'buster'] or
+     docker_ce_architecture not in ['amd64', 'armhf', 'arm64'])
+  register: docker_apt_repo
+
+- name: lxc-docker is purged
+  apt:
+    name=lxc-docker
+    state=absent
+    purge=yes
+
+- name: docker-ce is installed
+  apt:
+    name: 'docker-ce={{ docker_ce_version }}'
+    state: present
+  when: not ansible_check_mode or not docker_apt_repo.changed|default(true)

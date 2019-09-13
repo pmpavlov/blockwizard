@@ -1,0 +1,13 @@
+---
+
+- name: import task for Debian derivatives
+  import_tasks: debian.yml
+  when: ansible_os_family == "Debian"
+
+- name: import task for RedHat derivatives
+  import_tasks: redhat.yml
+  when: ansible_distribution in ["CentOS", "Fedora"]
+
+- name: import task for Amazon Linux
+  import_tasks: amazon.yml
+  when: ansible_distribution == "Amazon"

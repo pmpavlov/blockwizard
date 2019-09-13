@@ -39,6 +39,7 @@
   become_method: sudo
   remote_user: ec2-user
   roles:
+    - docker
     - app 
 
 - hosts: aws-deploy
