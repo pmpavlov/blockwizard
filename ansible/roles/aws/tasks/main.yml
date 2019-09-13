@@ -1,14 +1,14 @@
 ---
 - name: creating the vpc
-  ec2_vpc:
-    state: present
+  ec2_vpc_net:
+    name: "{{ app_name }}"
     cidr_block: 10.0.2.0/24
-    resource_tags: { "Name":" {{ app_name }}" }
-    subnets: "{{ vpc_subnets }}"       
-    internet_gateway: True
-    route_tables: "{{ route_tables }}"
     region: "{{ region }}"
-    wait: yes
+    tags:
+      module: ec2_vpc_net
+      Environment: blockwizard
+      Contact: ppavlov
+    tenancy: dedicated
   register: vpc
 
 - name: create admin access security group
@@ -16,7 +16,7 @@
     name: admin_access
     description: SSH access
     region: "{{ region }}"
-    vpc_id: "{{ vpc.vpc_id }}"
+    vpc_id: "{{ vpc.id }}"
     rules:
       - proto: tcp
         from_port: 22
