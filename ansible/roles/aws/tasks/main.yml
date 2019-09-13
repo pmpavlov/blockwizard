@@ -29,7 +29,7 @@
 - name: create admin access security group
   ec2_group:
     name: admin_access
-    description: SSH access
+    description: "{{ app_name }} SSH access"
     region: "{{ region }}"
     vpc_id: "{{ id }}"
     rules:
@@ -37,7 +37,11 @@
         from_port: 22
         to_port: 22
         cidr_ip: 0.0.0.0/0
-  tags: security_groups
+    state: present
+    tags: 
+      Name: "{{ app_name }}-ssh-sg"
+      Environment: blockwizard
+      Contact: ppavlov
   register: admin_access_group
 
 - name: create broker and node security group
@@ -45,6 +49,7 @@
     name: "{{ app_name }}"
     description: "{{ app_name }} web access"
     region: "{{ region }}"
+    vpc_id: "{{ id }}"
     rules:
       - proto: tcp
         from_port: 16000
@@ -58,8 +63,7 @@
         from_port: 16002
         to_port: 16002
         cidr_ip: 0.0.0.0/0
-    vpc_id: "{{ vpc.vpc_id }}"
-  tags: security_groups
+    tags: security_groups
   register: app_security_group
 
 - name: launch load balancer
