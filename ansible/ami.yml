@@ -3,6 +3,7 @@
 # On success, output ami details to vars/ami_current.yml for use by aws playbook
 
 - hosts: aws-ami
+  connection: local
   gather_facts: False
   roles:
   - aws
