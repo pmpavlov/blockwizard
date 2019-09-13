@@ -1,0 +1,32 @@
+sudo: required
+language: bash
+services:
+- docker
+env:
+  global:
+  - PATH=$HOME/.local/bin:$PATH
+# create a travis env variable to get the first 6 chars of the git commit hash. $TRAVIS_COMMIT has the full hash value.
+  - COMMIT=${TRAVIS_COMMIT::7}
+  - DOCKER_REPO=quay.io
+before_install:
+- pip install --user awscli
+- echo "Testing Docker Hub credentials"
+- docker login -u=$QUAY_USERNAME -p=$QUAY_PASSWORD quay.io
+- echo "Docker Hub credentials are working"
+before_script:
+- docker build --pull=true --rm=false -t ppavlov/blockwizard .
+- docker run -d -p 16001:16001 ppavlov/blockwizard; sleep 10
+script:
+- docker ps -l
+#- curl --retry 10 --retry-delay 5 -v http://localhost:16001/
+after_success:
+- echo "Test Success - Branch($TRAVIS_BRANCH) Pull Request($TRAVIS_PULL_REQUEST) Tag($TRAVIS_TAG)"
+- export REPO=$DOCKER_REPO/ppavlov/blockwizard
+- export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi`
+- echo $REPO:$TAG:$COMMIT
+- docker build -t $REPO:$COMMIT .
+- docker tag $REPO:$COMMIT $REPO:$TAG
+- docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER
+- docker push $REPO
+notifications:
+  email: true
