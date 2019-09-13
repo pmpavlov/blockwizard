@@ -10,7 +10,7 @@
   vars_files:
   - vars/ami_current.yml
   roles:
-  - aws_core
+  - aws
   tasks:
   - name: create launch config
     ec2_lc:
