@@ -37,7 +37,7 @@
   become: yes
   become_user: root
   become_method: sudo
-  remote_user: centos
+  remote_user: ec2-user
   roles:
     - app 
 
