@@ -42,8 +42,14 @@ For this test we will create ami and then run in in autoscaling group . We will 
 service using docker-compose. A good step will be using travis-ci in this case to run a additional cotainer with 
 ansible and boto that will execute the play. 
 
-4. Creating a custom ami with the code 
- 
+4. Creating a custom ami with the code and docker installed
+   The key_name is the key pare that you already have configured in AWS. 
 ```
-ansible-playbook -i inventory/hosts -e "key_name=test" ami.yml
+cd ansible
+ansible-playbook -i inventory/hosts -e "key_name=test1" ami.yml
+```
+
+5. Runing the already created ami in autoscaling group:
+```
+ansible-playbook -i inventory/hosts -e "key_name=test1" aws_config.yml
 ```
