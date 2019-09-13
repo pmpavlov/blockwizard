@@ -44,5 +44,5 @@ ansible and boto that will execute the play.
 4. Creating a custom ami with the code 
  
 ```
-ansible-playbook ansible/ami.yml
+ansible-playbook -i inventory/hosts -e "key_name=test" ami.yml
 ```
