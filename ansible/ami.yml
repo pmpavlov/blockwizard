@@ -12,7 +12,7 @@
     ec2:
       assign_public_ip: yes
       region: "{{ region }}"
-      key_name: "ppavlov"
+      key_name: "{{ key_name }}"
       group_id: "{{ ami_group_id }}"
       instance_type: "{{ instance_type }}"
       vpc_subnet_id: "{{ subnetb.subnet.id }}"
