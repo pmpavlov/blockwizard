@@ -15,3 +15,7 @@
     executable: pip
     state: latest
 
+- name: Make sure docker is running
+  systemd:
+    state: started
+    name: docker
