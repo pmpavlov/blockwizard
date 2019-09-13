@@ -1,2 +1,4 @@
 service_name: blockwizard 
-docker_image_name: quay.io/ppavlov/blockwizard 
+docker_image_name: quay.io/ppavlov/blockwizard
+owner: centos
+group: centos 
