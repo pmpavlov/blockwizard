@@ -4,19 +4,34 @@
     name: "{{ app_name }}"
     cidr_block: 10.0.2.0/24
     region: "{{ region }}"
+    dns_hostnames: yes
+    dns_support: yes
+    multi_ok: no
+    tenancy: default
     tags:
       module: ec2_vpc_net
       Environment: blockwizard
       Contact: ppavlov
-    tenancy: dedicated
   register: vpc
+
+- set_fact:
+    id: "{{ vpc.vpc.id }}"
+
+- name: creating the igw
+  ec2_vpc_igw:
+    vpc_id: "{{ id }}"
+    state: present
+    tags:
+      Environment: blockwizard
+      Name: "{{ app_name }}-igw"
+  register: igw
 
 - name: create admin access security group
   ec2_group:
     name: admin_access
     description: SSH access
     region: "{{ region }}"
-    vpc_id: "{{ vpc.id }}"
+    vpc_id: "{{ id }}"
     rules:
       - proto: tcp
         from_port: 22
