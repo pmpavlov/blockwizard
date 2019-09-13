@@ -1,0 +1,6 @@
+[all]
+localhost
+[aws-deploy]
+localhost ansible_connection=local
+[aws-ami]
+localhost ansible_connection=local

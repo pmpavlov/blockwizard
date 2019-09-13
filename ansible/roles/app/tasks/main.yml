@@ -1,0 +1,12 @@
+---
+  - name: Pull the docker image localy
+    docker_image:
+      name: {{ docker_image_name }}
+
+  - name: Upload the service file
+    template:
+      src: 'files/{{ service_name  }}.service
+      dest: '/etc/systemd/system/{{ service_name }}.service'
+      owner: {{ owner  }}
+      group: {{ group  }}
+      mode: '0600':
