@@ -4,3 +4,14 @@
   yum:
     name: docker
     state: present
+
+- name: pip is installed
+  yum:
+    name: python-pip
+    state: present
+
+- pip:
+    name: docker-py
+    executable: pip
+    state: latest
+

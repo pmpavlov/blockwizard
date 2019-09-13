@@ -1,6 +1,7 @@
 # Challenge
 ---------
 Service Status : [![Build Status](https://travis-ci.org/pmpavlov/blockwizard.svg?branch=master)](https://travis-ci.org/pmpavlov/blockwizard)
+Container Status: [![Docker Repository on Quay](https://quay.io/repository/ppavlov/blockwizard/status "Docker Repository on Quay")](https://quay.io/repository/ppavlov/blockwizard)
 
 The continaer curreltnly is build with very basic config using travis-ci
 
