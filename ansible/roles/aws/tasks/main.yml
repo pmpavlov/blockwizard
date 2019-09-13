@@ -46,21 +46,13 @@
 
 - name: create broker and node security group
   ec2_group:
-    name: add_security
+    name: app_security
     description: "{{ app_name }}-web-access"
     region: "{{ region }}"
     vpc_id: "{{ id }}"
     rules:
       - proto: tcp
         from_port: 16000
-        to_port: 16000
-        cidr_ip: 0.0.0.0/0
-      - proto: tcp
-        from_port: 16001
-        to_port: 16001
-        cidr_ip: 0.0.0.0/0
-      - proto: tcp
-        from_port: 16002
         to_port: 16002
         cidr_ip: 0.0.0.0/0
     tags: 
