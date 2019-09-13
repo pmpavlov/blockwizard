@@ -1,0 +1,23 @@
+version: '3'
+services:
+  broker:
+    image: "quay.io/ppavlov/blockwizard"
+    ports:
+      - "16000:16000"
+    environment:
+      mode: broker
+    links:
+      - "node1"
+      - "node2"
+  node1:
+    image: "quay.io/ppavlov/blockwizard"
+    ports:
+      - "16001:16001"
+    environment:
+      mode: node1
+  node2:
+    image: "quay.io/ppavlov/blockwizard"
+    ports:
+      - "16002:16002"
+    environment:
+      mode: node2

@@ -10,3 +10,12 @@
       owner: '{{ owner  }}'
       group: '{{ group  }}'
       mode: '0600'
+
+  - name: Upload the service file
+    template:
+      src: 'files/docker-compose.yml'
+      dest: '/home/ec2-user/docker-compose.yml'
+      owner: '{{ owner  }}'
+      group: '{{ group  }}'
+      mode: '0644'
+

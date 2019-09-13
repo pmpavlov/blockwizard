@@ -4,14 +4,14 @@ Requires=docker.service
 After=docker.service
 [Service]
 Restart=always
-User=centos
+User=ec2-user
 Group=docker
 
 # Shutdown container (if running) when unit is stopped
-ExecStartPre=/usr/local/bin/docker-compose -f /home/centos/docker-compose.yml down -v
+ExecStartPre=/usr/local/bin/docker-compose -f /home/ec2-user/docker-compose.yml down -v
 # Start container when unit is started
-ExecStart=/usr/local/bin/docker-compose -f /home/centos/docker-compose.yml up
+ExecStart=/usr/local/bin/docker-compose -f /home/ec2-user/docker-compose.yml up
 # Stop container when unit is stopped
-ExecStop=/usr/local/bin/docker-compose -f /home/centos/docker-compose.yml down -v
+ExecStop=/usr/local/bin/docker-compose -f /home/ec2-user/docker-compose.yml down -v
 [Install]
 WantedBy=multi-user.target
