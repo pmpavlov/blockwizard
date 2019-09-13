@@ -35,4 +35,14 @@ docker run -it -d -p 16002:16002 -e "mode=node2" quay.io/ppavlov/blockwizard
 docker-compose up -d
 ```
 
-4. Deploying andsible 
+Before continue here i will say as we have already continer with the plication . 
+Tha can be deplyed in many ways. We can use ECS , EKS , elasticserch or simple EC2 instances with ELB in front. 
+For this test we will create ami and then run in in autoscaling group . We will run the containers as systemctl 
+service using docker-compose. A good step will be using travis-ci in this case to run a additional cotainer with 
+ansible and boto that will execute the play. 
+
+4. Creating a custom ami with the code 
+ 
+```
+ansible-playbook ansible/ami.yml
+```
