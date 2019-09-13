@@ -46,8 +46,8 @@
 
 - name: create broker and node security group
   ec2_group:
-    name: "{{ app_name }}"
-    description: "{{ app_name }} web access"
+    name: add_security
+    description: "{{ app_name }}-web-access"
     region: "{{ region }}"
     vpc_id: "{{ id }}"
     rules:
@@ -63,7 +63,10 @@
         from_port: 16002
         to_port: 16002
         cidr_ip: 0.0.0.0/0
-    tags: security_groups
+    tags: 
+      Name: "{{ app_name }}-app-sg"
+      Environment: blockwizard
+      Contact: ppavlov 
   register: app_security_group
 
 - name: launch load balancer
