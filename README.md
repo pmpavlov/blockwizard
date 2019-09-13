@@ -7,6 +7,14 @@ The continaer curreltnly is build with very basic config using travis-ci
 ```
 https://travis-ci.org/pmpavlov/blockwizard
 ```
+and it is pushed to 
+```
+https://quay.io/repository/ppavlov/blockwizard
+```
+You can see of tags and the ability to track back to a commit:
+```
+https://quay.io/repository/ppavlov/blockwizard?tab=tags
+```
 
 
 ### Usage
