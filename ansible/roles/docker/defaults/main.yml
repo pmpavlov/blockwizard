@@ -1,4 +1,7 @@
 ---
+service_enabled: true
+service_state: started
+service_masked: false
 
 docker_ce_version: '*'
 docker_ce_channel: 'stable'

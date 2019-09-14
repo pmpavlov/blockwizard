@@ -12,10 +12,15 @@
     executable: pip
     state: latest
 
+
 - name: Make sure docker is running
   systemd:
-    state: started
-    name: docker
+    name: 'docker.service'
+    daemon_reload: true
+    enabled: "{{ service_enabled }}"
+    masked: "{{ service_masked }}"
+    state: "{{ service_state }}"
+  register: enable_docker
 
 - name: downloading docker-compose...
   become: yes
