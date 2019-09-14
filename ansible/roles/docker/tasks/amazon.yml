@@ -1,13 +1,10 @@
 ---
 
-- name: docker is installed
+- name: docker ind pips installed
   yum:
-    name: docker
-    state: present
-
-- name: pip is installed
-  yum:
-    name: python-pip
+    name:
+     - docker
+     - python-pip
     state: present
 
 - pip:

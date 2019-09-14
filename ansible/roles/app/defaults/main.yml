@@ -1,4 +1,7 @@
 service_name: blockwizard 
+service_enabled: true
+service_state: started
+service_masked: false
 docker_image_name: quay.io/ppavlov/blockwizard
 owner: ec2-user
 group: ec2-user

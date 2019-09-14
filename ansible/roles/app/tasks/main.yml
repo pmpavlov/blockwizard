@@ -5,17 +5,25 @@
 
   - name: Upload the service file
     template:
-      src: 'files/{{ service_name  }}.service'
-      dest: '/etc/systemd/system/{{ service_name }}.service'
-      owner: '{{ owner  }}'
-      group: '{{ group  }}'
-      mode: '0600'
-
-  - name: Upload the service file
-    template:
       src: 'files/docker-compose.yml'
       dest: '/home/ec2-user/docker-compose.yml'
       owner: '{{ owner  }}'
       group: '{{ group  }}'
       mode: '0644'
 
+  - name: Upload the service file
+    template:
+      src: 'files/{{ service_name  }}.service'
+      dest: '/etc/systemd/system/{{ service_name }}.service'
+      owner: '{{ owner  }}'
+      group: '{{ group  }}'
+      mode: '0600'
+
+  - name: Enable and start the service
+    systemd:
+      name: '{{ service_name  }}.service'
+      daemon_reload: true
+      enabled: "{{ service_enabled }}"
+      masked: "{{ service_masked }}"
+      state: "{{ service_state }}"
+    register: enable_and_start

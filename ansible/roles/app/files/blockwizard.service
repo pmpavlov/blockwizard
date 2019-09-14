@@ -13,5 +13,8 @@ ExecStartPre=/usr/local/bin/docker-compose -f /home/ec2-user/docker-compose.yml 
 ExecStart=/usr/local/bin/docker-compose -f /home/ec2-user/docker-compose.yml up
 # Stop container when unit is stopped
 ExecStop=/usr/local/bin/docker-compose -f /home/ec2-user/docker-compose.yml down -v
+# Auto-Restart the container after a crash.
+Restart=always
 [Install]
-WantedBy=multi-user.target
+# make sure service is started after docker is up
+WantedBy=docker.service
