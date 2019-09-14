@@ -46,6 +46,18 @@
       Name: "{{ app_name }}-sub-1b"
   register: subneta
 
+- name: Set up public subnet route table
+  ec2_vpc_route_table:
+    vpc_id: "{{ id }}"
+    region: "{{ region }}" 
+    tags:
+      Name: public
+    subnets: "{{ asg_subnets }}"
+    routes:
+      - dest: 0.0.0.0/0
+        gateway_id: "{{ igw.gateway_id }}"
+  register: public_route_table
+
 - name: create admin access security group
   ec2_group:
     name: admin_access
