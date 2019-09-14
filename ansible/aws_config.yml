@@ -27,6 +27,8 @@
     ec2_asg:
       name: "{{ asg_group_name }}"
       health_check_period: 60
+      load_balancers: "{{ load_balancers }}"
+      health_check_type: ELB
       availability_zones: "{{ availability_zones | join(',')}}"
       launch_config_name: "{{ lc_name }}"
       min_size: "{{ asg_min_size }}"
