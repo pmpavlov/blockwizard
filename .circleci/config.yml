@@ -76,6 +76,10 @@ jobs:
             docker run -it -d -p 16000:16000 -e "mode=broker" $IMAGE_NAME:latest
             docker run -it -d -p 16001:16001 -e "mode=node1" $IMAGE_NAME:latest
             docker run -it -d -p 16001:16001 -e "mode=node1" $IMAGE_NAME:latest
+        - store_artifacts:
+              path: test-results
+        - store_test_results:
+              path: test-results            
   deploy-docker-image:
       machine:
           image: ubuntu-2004:current
