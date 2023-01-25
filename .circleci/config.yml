@@ -19,8 +19,6 @@ jobs:
          paths:
              - .           
   build-production:
-    environment:
-      IMAGE_NAME: ppavlov/blockwizard
     docker:
       - image: cimg/base:current
         auth:
@@ -54,11 +52,11 @@ jobs:
         - docker/check:
               registry: $DOCKER_REGISTRY
         - docker/build:
-              image: $IMAGE_NAME
+              image: $DOCKER_IMAGE_NAME
               tag: $__BUILD_VERSION
               registry: $DOCKER_REGISTRY
         - docker/push:
-              image: $IMAGE_NAME
+              image: $DOCKER_IMAGE_NAME
               tag: $__BUILD_VERSION
               registry: $DOCKER_REGISTRY             
   test:
