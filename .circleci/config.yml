@@ -5,7 +5,6 @@ jobs:
   build:
     environment:
       IMAGE_NAME: ppavlov/blockwizard
-      IMAGE_TAG: $CIRCLE_TAG
     docker:
       - image: cimg/base:current
         auth:
@@ -19,12 +18,10 @@ jobs:
          name: Build Docker Image
          command: |
             docker build -t $IMAGE_NAME:latest .
-      - run:
-          name: Publish Docker Image to Docker Hub
-          command: |
-            docker tag $IMAGE_NAME:latest $IMAGE_NAME:$IMAGE_TAG
-            docker push $IMAGE_NAME:latest
-            docker push $IMAGE_NAME:$IMAGE_TAG      
+      - persist_to_workspace:
+         root: .
+         paths:
+             - .             
   test:
     docker:
       - image: cimg/deploy:2023.01
@@ -35,6 +32,8 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
+      - attach_workspace:
+          at: .      
       - run: |
           docker run -it -d -p 16000:16000 -e "mode=broker" $IMAGE_NAME
           docker run -it -d -p 16001:16001 -e "mode=node1" $IMAGE_NAME
