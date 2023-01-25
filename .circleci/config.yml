@@ -4,10 +4,11 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: docker:latest
+      - image: cimg/base:current
         auth:
           username: ppavlov
-          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+          password: $DOCKERHUB_PASSWORD
+    resource_class: medium
     steps:
       - checkout
       - run: docker build -t blockwizard .
@@ -16,10 +17,13 @@ jobs:
       - image: cimg/deploy:2023.01
         auth:
           username: ppavlov
-          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+          password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
-      - run: docker run -it -d -p 16000:16000 -e "mode=broker" blockwizard
+      - run: |
+          docker run -it -d -p 16000:16000 -e "mode=broker" blockwizard
+          docker run -it -d -p 16001:16001 -e "mode=node1" blockwizard
+          docker run -it -d -p 16001:16001 -e "mode=node1" blockwizard
   push:
     docker:
       - image: cimg/deploy:2023.01
