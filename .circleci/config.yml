@@ -10,7 +10,7 @@ jobs:
           password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
     steps:
       - checkout
-      - run: echo "this is the build job"
+      - run: docker build -t blockwizard .
   test:
     docker:
       - image: cimg/deploy:2023.01
@@ -19,9 +19,7 @@ jobs:
           password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
     steps:
       - checkout
-      - run: echo "this is the test job"
-
-# Orchestrate our job run sequence
+      - run: docker run -it -d -p 16000:16000 -e "mode=broker" blockwizard 
 workflows:
   build_and_test:
     jobs:
