@@ -95,8 +95,8 @@ jobs:
               command: docker tag $DOCKER_REGISTRY/$DOCKER_IMAGE_NAME:$__BUILD_VERSION $DOCKER_REGISTRY/$DOCKER_IMAGE_NAME:latest
           - docker/push:
                 image: $DOCKER_IMAGE_NAME
-                  tag: latest
-                  registry: $DOCKER_REGISTRY
+                tag: latest
+                registry: $DOCKER_REGISTRY
 workflows:             
     version: 2
     build-test-deploy:
