@@ -21,6 +21,7 @@ jobs:
           password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
+      - setup_remote_docker
       - run: |
           docker run -it -d -p 16000:16000 -e "mode=broker" blockwizard
           docker run -it -d -p 16001:16001 -e "mode=node1" blockwizard
@@ -30,9 +31,10 @@ jobs:
       - image: cimg/deploy:2023.01
         auth:
           username: ppavlov
-          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+          password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
+      - setup_remote_docker
       - run: docker tag blockwizard ppavlov/blockwizard
              docker push ppavlov/blockwizard
              
