@@ -23,6 +23,8 @@ jobs:
          paths:
              - .             
   test:
+    environment:
+      IMAGE_NAME: ppavlov/blockwizard
     docker:
       - image: cimg/deploy:2023.01
         auth:
