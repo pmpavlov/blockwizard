@@ -5,6 +5,7 @@ jobs:
   build:
     environment:
       IMAGE_NAME: ppavlov/blockwizard
+      IMAGE_TAG: $CIRCLE_TAG
     docker:
       - image: cimg/base:current
         auth:
@@ -21,7 +22,6 @@ jobs:
       - run:
           name: Publish Docker Image to Docker Hub
           command: |
-            IMAGE_TAG=${CIRCLE_TAG/v/''}
             docker tag $IMAGE_NAME:latest $IMAGE_NAME:$IMAGE_TAG
             docker push $IMAGE_NAME:latest
             docker push $IMAGE_NAME:$IMAGE_TAG      
