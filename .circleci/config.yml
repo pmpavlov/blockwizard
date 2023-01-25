@@ -33,11 +33,11 @@ jobs:
       - checkout
       - setup_remote_docker
       - attach_workspace:
-          at: .      
+          at: .
       - run: |
-          docker run -it -d -p 16000:16000 -e "mode=broker" $IMAGE_NAME
-          docker run -it -d -p 16001:16001 -e "mode=node1" $IMAGE_NAME
-          docker run -it -d -p 16001:16001 -e "mode=node1" $IMAGE_NAME
+          docker run -it -d -p 16000:16000 -e "mode=broker" $IMAGE_NAME:latest
+          docker run -it -d -p 16001:16001 -e "mode=node1" $IMAGE_NAME:latest
+          docker run -it -d -p 16001:16001 -e "mode=node1" $IMAGE_NAME:latest
   push:
     docker:
       - image: cimg/deploy:2023.01
