@@ -3,6 +3,8 @@ version: 2.1
 # Define the jobs we want to run for this project
 jobs:
   build:
+    environment:
+      IMAGE_NAME: ppavlov/blockwizard
     docker:
       - image: cimg/base:current
         auth:
@@ -12,20 +14,21 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - run: docker build -t blockwizard .
+      - run: docker build -t $IMAGE_NAME:latest .
   test:
     docker:
       - image: cimg/deploy:2023.01
         auth:
           username: ppavlov
           password: $DOCKERHUB_PASSWORD
+    resource_class: medium      
     steps:
       - checkout
       - setup_remote_docker
       - run: |
-          docker run -it -d -p 16000:16000 -e "mode=broker" blockwizard
-          docker run -it -d -p 16001:16001 -e "mode=node1" blockwizard
-          docker run -it -d -p 16001:16001 -e "mode=node1" blockwizard
+          docker run -it -d -p 16000:16000 -e "mode=broker" $IMAGE_NAME
+          docker run -it -d -p 16001:16001 -e "mode=node1" $IMAGE_NAME
+          docker run -it -d -p 16001:16001 -e "mode=node1" $IMAGE_NAME
   push:
     docker:
       - image: cimg/deploy:2023.01
