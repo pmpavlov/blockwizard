@@ -69,27 +69,15 @@ jobs:
         auth:
           username: ppavlov
           password: $DOCKERHUB_PASSWORD
-    resource_class: medium      
+    resource_class: medium
+    parallelism: 2
     steps:
-      - checkout
-      - setup_remote_docker
-      - attach_workspace:
-          at: .
-      - run: |
-          docker run -it -d -p 16000:16000 -e "mode=broker" $IMAGE_NAME:latest
-          docker run -it -d -p 16001:16001 -e "mode=node1" $IMAGE_NAME:latest
-          docker run -it -d -p 16001:16001 -e "mode=node1" $IMAGE_NAME:latest
-  push:
-    docker:
-      - image: cimg/deploy:2023.01
-        auth:
-          username: ppavlov
-          password: $DOCKERHUB_PASSWORD
-    steps:
-      - checkout
-      - setup_remote_docker
-      - run: docker tag blockwizard ppavlov/blockwizard
-             docker push ppavlov/blockwizard
+        - attach_workspace:
+             at: .
+        - run: |
+            docker run -it -d -p 16000:16000 -e "mode=broker" $IMAGE_NAME:latest
+            docker run -it -d -p 16001:16001 -e "mode=node1" $IMAGE_NAME:latest
+            docker run -it -d -p 16001:16001 -e "mode=node1" $IMAGE_NAME:latest
 workflows:             
     version: 2
     build-test-deploy:
