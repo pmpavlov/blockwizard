@@ -35,14 +35,33 @@ jobs:
          name: Production build
          command: |
             export __BUILD_VERSION="$(cat version.txt)"        
-      - run: 
-         name: Build Docker Image
-         command: |
-            docker build -t $IMAGE_NAME:latest .
       - persist_to_workspace:
          root: .
          paths:
-             - .             
+             - .
+  build-docker-image:
+     machine:
+            # The image uses the current tag, which always points to the most recent
+            # supported release. If stability and determinism are crucial for your CI
+            # pipeline, use a release date tag with your image, e.g. ubuntu-2004:202201-02
+            image: ubuntu-2004:current
+     steps:
+       - attach_workspace:
+            at: .
+       - run:
+          name: Setup __BUILD_VERSION envvar
+          command: |
+             echo 'export __BUILD_VERSION="$(cat version.txt)"' >> "$BASH_ENV"
+       - docker/check:
+             registry: $DOCKER_REGISTRY
+       - docker/build:
+             image: $IMAGE_NAME
+             tag: $__BUILD_VERSION
+             registry: $DOCKER_REGISTRY
+       - docker/push:
+             image: $IMAGE_NAME
+             tag: $__BUILD_VERSION
+             registry: $DOCKER_REGISTRY             
   test:
     environment:
       IMAGE_NAME: ppavlov/blockwizard
