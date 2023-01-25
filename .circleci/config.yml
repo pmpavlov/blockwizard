@@ -19,7 +19,18 @@ jobs:
           password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
     steps:
       - checkout
-      - run: docker run -it -d -p 16000:16000 -e "mode=broker" blockwizard 
+      - run: docker run -it -d -p 16000:16000 -e "mode=broker" blockwizard
+  push:
+    docker:
+      - image: cimg/deploy:2023.01
+        auth:
+          username: ppavlov
+          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+    steps:
+      - checkout
+      - run: docker tag blockwizard ppavlov/blockwizard
+             docker push ppavlov/blockwizard
+             
 workflows:
   build_and_test:
     jobs:
